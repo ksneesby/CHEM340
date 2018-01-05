@@ -46,5 +46,21 @@ pyplot.xlabel ("Butanal")
 pyplot.ylabel ("Isoprene")
 
 
+#Main one's to look at
+pyplot.figure(8)
+pyplot.plot(df["CH2O_TOGA"],df["Isoprene_TOGA"],"o",ms=2, color="red")
+pyplot.xlabel ("Formaldehyde")
+pyplot.ylabel ("Isoprene")
+
+pyplot.figure(9)
+pyplot.plot(df["MACR_TOGA"],df["Isoprene_TOGA"],"o",ms=2, color="navy")
+pyplot.xlabel ("Methacrolein")
+pyplot.ylabel ("Isoprene")
+
+pyplot.figure(10)
+pyplot.plot(df["MVK_TOGA"],df["Isoprene_TOGA"],"o",ms=2, color="green")
+pyplot.xlabel ("Methyl vinyl ketone")
+pyplot.ylabel ("Isoprene")
+
 
 pyplot.show()
