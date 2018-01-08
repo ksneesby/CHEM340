@@ -23,6 +23,22 @@ df = df1.append([df2, df3, df4, df5, df6])
 lon = df["G_LONG"].values
 lat = df["G_LAT"].values
 data = df["Isoprene_TOGA"].values
+alt = df["G_ALT"].values
+
+# make new longitude, latitude and Isoprene data arrays for data collected at an altitude of 2000 or below
+
+lowAlt_lon = numpy.zeros(246)
+lowAlt_lat = numpy.zeros(246)
+lowAlt_data = numpy.zeros(246)
+
+counter = 0
+
+for i in range(len(alt)):
+    if alt[i]<=2000:
+        lowAlt_lon[counter] = lon[i]
+        lowAlt_lat[counter] = lat[i]
+        lowAlt_data[counter] = data[i]
+        counter = counter + 1
 
 
 # draw the map background
@@ -36,7 +52,7 @@ m.drawcountries(color = "black")
 
 
 # scatter Isoprene data
-m.scatter(lon, lat, latlon=True, c=data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=4, s=20)
+m.scatter(lowAlt_lon, lowAlt_lat, latlon=True, c=lowAlt_data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=4, s=20)
 
 
 # hide land data points
