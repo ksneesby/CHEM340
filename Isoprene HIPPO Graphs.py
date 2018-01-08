@@ -12,7 +12,7 @@ df = pd.read_csv('/home/kate/Documents/CHEM340/HIPPO/HIPPO_discrete_continuous_m
 
 #sort data file according to altitude
 df.sort_values(['GGALT'], ascending=True, inplace=True)
-df.reset_index(inplace = True)
+df.reset_index(inplace = True, drop=True)
 
 #find row in which altitude is above 2000
 counter = 0
