@@ -20,25 +20,22 @@ df6 = pd.read_csv('/home/kate/Documents/CHEM340/ATom/MER-TOGA_DC8_20170213_R3.ic
 
 df = df1.append([df2, df3, df4, df5, df6])
 
-lon = df["G_LONG"].values
-lat = df["G_LAT"].values
-data = df["Isoprene_TOGA"].values
-alt = df["G_ALT"].values
 
-# make new longitude, latitude and Isoprene data arrays for data collected at an altitude of 2000 or below
+#sort data file according to altitude
+df.sort_values(['G_ALT'], ascending=True, inplace=True)
+df.reset_index(inplace = True)
 
-lowAlt_lon = numpy.zeros(246)
-lowAlt_lat = numpy.zeros(246)
-lowAlt_data = numpy.zeros(246)
-
+#find row in which altitude is above 2000
 counter = 0
 
-for i in range(len(alt)):
-    if alt[i]<=2000:
-        lowAlt_lon[counter] = lon[i]
-        lowAlt_lat[counter] = lat[i]
-        lowAlt_data[counter] = data[i]
+for i in range (len(df["G_ALT"])):
+    if df["G_ALT"][i] <= 2000:
         counter = counter + 1
+        
+# use data collected at altitude of 2000 or below        
+lon = df["G_LONG"][:counter].values
+lat = df["G_LAT"][:counter].values
+data = df["Isoprene_TOGA"][:counter].values
 
 
 # draw the map background
@@ -52,7 +49,7 @@ m.drawcountries(color = "black")
 
 
 # scatter Isoprene data
-m.scatter(lowAlt_lon, lowAlt_lat, latlon=True, c=lowAlt_data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=4, s=20)
+m.scatter(lon, lat, latlon=True, c=data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=4, s=20)
 
 
 # hide land data points
