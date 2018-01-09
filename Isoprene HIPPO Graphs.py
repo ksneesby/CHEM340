@@ -42,11 +42,6 @@ pyplot.plot(df["GGLON"][:counter],df["Isoprene_AW"][:counter],"o",ms=2, color="p
 pyplot.xlabel ("Longitude")
 pyplot.ylabel ("Isoprene")
 
-pyplot.figure(5)
-pyplot.plot(df["CO_flask"][:counter],df["Isoprene_AW"][:counter],"o",ms=2, color="orange")
-pyplot.xlabel ("Carbon monoxide")
-pyplot.ylabel ("Isoprene")
-
 
 
 pyplot.show()

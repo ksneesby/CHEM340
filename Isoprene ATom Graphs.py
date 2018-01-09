@@ -29,39 +29,55 @@ for i in range (len(df["G_ALT"])):
         counter = counter + 1
 
 # plot graphs using data where altitude is below 2000
-pyplot.figure(1)
-pyplot.plot(df["UTC_Start"][:counter],df["Isoprene_TOGA"][:counter],"o", ms=2, color="red")
-pyplot.xlabel ("Time (UTC seconds since midnight)")
-pyplot.ylabel ("Isoprene")
 
-pyplot.figure(2)
+pyplot.figure(1)
 pyplot.plot(df["G_ALT"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="blue")
 pyplot.xlabel ("Altitude")
 pyplot.ylabel ("Isoprene")
 
-pyplot.figure(3)
-pyplot.plot(df["G_LAT"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="green")
-pyplot.xlabel ("Latitude")
-pyplot.ylabel ("Isoprene")
-
-pyplot.figure(4)
-pyplot.plot(df["G_LONG"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="purple")
-pyplot.xlabel ("Longitude")
-pyplot.ylabel ("Isoprene")
-
-pyplot.figure(5)
+pyplot.figure(2)
 pyplot.plot(df["MVK_TOGA"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="orange")
 pyplot.xlabel ("MVK")
 pyplot.ylabel ("Isoprene")
 
-pyplot.figure(6)
+pyplot.figure(3)
 pyplot.plot(df["MACR_TOGA"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="brown")
 pyplot.xlabel ("MACR")
 pyplot.ylabel ("Isoprene")
 
-pyplot.figure(7)
+pyplot.figure(4)
+pyplot.plot(df["DMS_TOGA"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="green")
+pyplot.xlabel ("DMS")
+pyplot.ylabel ("Isoprene")
+
+pyplot.figure(5)
+pyplot.plot(df["j[CH3ONO2->CH3O+NO2]"][:counter],df["Isoprene_TOGA"][:counter],"o",ms=2, color="purple")
+pyplot.xlabel ("Methyl nitrate")
+pyplot.ylabel ("Isoprene")
+
+pyplot.figure(6)
 pyplot.plot(df["MACR_TOGA"][:counter],df["MVK_TOGA"][:counter],"o",ms=2, color="pink")
 pyplot.xlabel ("MACR")
 pyplot.ylabel ("MVK")
+
+pyplot.figure(7)
+pyplot.plot(df["DMS_TOGA"][:counter],df["MVK_TOGA"][:counter],"o",ms=2, color="aqua")
+pyplot.xlabel ("DMS")
+pyplot.ylabel ("MVK")
+
+pyplot.figure(8)
+pyplot.plot(df["j[CH3ONO2->CH3O+NO2]"][:counter],df["MVK_TOGA"][:counter],"o",ms=2, color="violet")
+pyplot.xlabel ("Methyl nitrate")
+pyplot.ylabel ("MVK")
+
+pyplot.figure(9)
+pyplot.plot(df["DMS_TOGA"][:counter],df["MACR_TOGA"][:counter],"o",ms=2, color="red")
+pyplot.xlabel ("DMS")
+pyplot.ylabel ("MACR")
+
+pyplot.figure(10)
+pyplot.plot(df["j[CH3ONO2->CH3O+NO2]"][:counter],df["MACR_TOGA"][:counter],"o",ms=2, color="green")
+pyplot.xlabel ("Methyl nitrate")
+pyplot.ylabel ("MACR")
 
 pyplot.show()
