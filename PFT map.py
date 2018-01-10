@@ -14,8 +14,13 @@ import matplotlib.pyplot as pyplot
 import numpy
 
 
+# =============================================================================
+# ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', concat_dim ='time')
+# ds.mean
+# =============================================================================
 
-ds=xr.open_dataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/PhytoDOAS-PFT-v3.3_200208.nc')
+
+ds=xr.open_dataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/PhytoDOAS-PFT-v3.3_200301.nc')
 #ds=xr.open_dataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\PhytoDOAS-PFT-v3.3_200208.nc')
 
 
@@ -24,30 +29,82 @@ df=ds.to_dataframe()
 df.reset_index(inplace = True, drop = True)
 
 
-
 lon = df["Lon"].values
 lat = df["Lat"].values
 data = df["CYA"].values
 
 
-# draw the map background
-fig = pyplot.figure(figsize=(8, 8))
+# repeat last data column to avoid white space    
 
-#m = Basemap(projection='aeqd',lon_0 = -180,lat_0 = -60,width = 15000000,height = 15000000)
-m = Basemap(projection='robin',lon_0 = -180,lat_0 = -60)
+#data,lon = addcyclic(data, lon)
 
-m.drawcoastlines(color = "black")
-m.drawcountries(color = "black")
+    
+
+# transform lon/lat to coordinate grid
+
+lon,lat = numpy.meshgrid(lon,lat, sparse = True)
+
+    
+
+# Set up the map
+
+map=Basemap(projection='robin',lon_0=-180,lat_0=-60)
+
+f=pyplot.figure()
+
+    
+
+# plot the data
+
+col=map.pcolormesh(lon,lat,data,latlon=True, cmap=pyplot.get_cmap('viridis'),linewidth=0, rasterized=True)
+
+col.set_edgecolor('face')
+
+                                                                                   
+
+# improve the map
+
+map.drawcoastlines(color='black')
+
+map.drawcountries(color='black')
 
 
-# scatter Isoprene data
-m.scatter(lon, lat, latlon=True, c=data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=0.2, s=20)
+
+# add a color bar
+
+cb = map.colorbar(col, "bottom")
+
+cb.set_label(CYA.upper()+', ppt')
+                                      
+                                  
+
+                                                                                   
 
 
-# hide land data points
-m.fillcontinents(color='white')
 
 
-# create colorbar and legend
-pyplot.colorbar(label=r'CYA')
+
+
+# =============================================================================
+# # draw the map background
+# fig = pyplot.figure(figsize=(8, 8))
+# 
+# #m = Basemap(projection='aeqd',lon_0 = -180,lat_0 = -60,width = 15000000,height = 15000000)
+# m = Basemap(projection='robin',lon_0 = -180,lat_0 = -60)
+# 
+# m.drawcoastlines(color = "black")
+# m.drawcountries(color = "black")
+# 
+# 
+# # scatter CYA data
+# m.pcolormesh(lon, lat, data)
+# 
+# 
+# # hide land data points
+# m.fillcontinents(color='white')
+# 
+# 
+# # create colorbar and legend
+# pyplot.colorbar(label=r'CYA')
+# =============================================================================
 
