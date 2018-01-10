@@ -14,52 +14,27 @@ import matplotlib.pyplot as pyplot
 import numpy
 
 
-#ds=xr.open_dataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/syn_glb_level3_20020801.nc')
-ds=xr.open_mfdataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\*.nc', concat_dim = 'time')
 
-
+ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*.nc', concat_dim = 'time')
+#ds=xr.open_mfdataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\*.nc', concat_dim = 'time')
 
 time = ds.time
-lat = ds.variables['Lat'][:]
+lat = ds.Lat
 lon = ds.Lon
 DIA = ds.DIA
 COC = ds.COC
 CYA = ds.CYA
 
-
-# =============================================================================
-# CYA_site = CYA.sel(lat = -70, lon = -160, method = 'nearest')
-# CYA_site.plot()
-# =============================================================================
-
-
-pyplot.plot(time,CYA[:,150,300])
-pyplot.show()
-
-
+pyplot.figure(1)
+COC_site = COC.sel(lat = -180, lon = -60)
+COC_site.plot(color = 'red')
+pyplot.figure(2)
+DIA_site = DIA.sel(lat = -180, lon = -60)
+DIA_site.plot(color = 'blue')
+pyplot.figure(3)
+CYA_site = CYA.sel(lat = -180, lon = -60)
+CYA_site.plot(color = 'green')
 
 
 
 
-# =============================================================================
-# # draw the map background
-# fig = pyplot.figure(figsize=(8, 8))
-# 
-# m = Basemap(projection='aeqd',lon_0 = -180,lat_0 = -60,width = 15000000,height = 15000000)
-# 
-# m.drawcoastlines(color = "black")
-# m.drawcountries(color = "black")
-# 
-# 
-# # scatter Isoprene data
-# m.scatter(lon, lat, latlon=True, c=CYA, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=4, s=20)
-# 
-# 
-# # hide land data points
-# m.fillcontinents(color='white')
-# 
-# 
-# # create colorbar and legend
-# pyplot.colorbar(label=r'CYA')
-# 
-# =============================================================================
