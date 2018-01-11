@@ -9,10 +9,10 @@ Created on Tue Jan  9 14:15:45 2018
 from netCDF4 import MFDataset, Dataset
 import xarray as xr
 import pandas as pd
-from mpl_toolkits.basemap import Basemap
+from mpl_toolkits.basemap import Basemap, addcyclic
 import matplotlib.pyplot as pyplot
 import numpy
-
+import numpy.ma as ma
 
 # =============================================================================
 # ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', concat_dim ='time')
@@ -29,38 +29,35 @@ df=ds.to_dataframe()
 df.reset_index(inplace = True, drop = True)
 
 
-lon = df["Lon"].values
-lat = df["Lat"].values
-data = df["CYA"].values
+new_df = df.pivot(index='Lon', columns='Lat', values='CYA')
 
 
-# repeat last data column to avoid white space    
+lon = numpy.arange(-179.75, 180, 0.5)
+lat = numpy.arange(-89.75, 90, 0.5)
+data = new_df
 
-#data,lon = addcyclic(data, lon)
 
-    
+
+
 
 # transform lon/lat to coordinate grid
 
-lon,lat = numpy.meshgrid(lon,lat, sparse = True)
+lon,lat = numpy.meshgrid(lon,lat, sparse=True)
 
-    
 
 # Set up the map
 
-map=Basemap(projection='robin',lon_0=-180,lat_0=-60)
+map=Basemap(projection='robin',lon_0=-130,lat_0=0)
 
 f=pyplot.figure()
 
-    
 
 # plot the data
 
-col=map.pcolormesh(lon,lat,data,latlon=True, cmap=pyplot.get_cmap('viridis'),linewidth=0, rasterized=True)
+col=map.pcolormesh(lon,lat,data, latlon=True,cmap=pyplot.get_cmap('viridis'),vmin=0,vmax=0.3,linewidth=0,rasterized=True)
 
 col.set_edgecolor('face')
-
-                                                                                   
+                                                                           
 
 # improve the map
 
@@ -69,16 +66,18 @@ map.drawcoastlines(color='black')
 map.drawcountries(color='black')
 
 
-
 # add a color bar
 
 cb = map.colorbar(col, "bottom")
 
-cb.set_label(CYA.upper()+', ppt')
-                                      
-                                  
 
-                                                                                   
+
+
+
+
+
+
+
 
 
 
@@ -97,7 +96,7 @@ cb.set_label(CYA.upper()+', ppt')
 # 
 # 
 # # scatter CYA data
-# m.pcolormesh(lon, lat, data)
+# #m.scatter(lon, lat, latlon=True, c=data, cmap=pyplot.get_cmap('viridis'), vmin=0, vmax=0.3, s=20)
 # 
 # 
 # # hide land data points
