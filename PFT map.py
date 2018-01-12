@@ -6,19 +6,24 @@ Created on Tue Jan  9 14:15:45 2018
 @author: kate
 """
 
-from netCDF4 import MFDataset, Dataset
-import xarray as xr
-import pandas as pd
-from mpl_toolkits.basemap import Basemap, addcyclic
-import matplotlib.pyplot as pyplot
-import numpy
-import numpy.ma as ma
 
 # =============================================================================
 # ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', concat_dim ='time')
 # ds.mean
 # =============================================================================
 
+import numpy as np
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+from pandas import DataFrame
+
+plt.figure(figsize=(8, 8))
+
+m = Basemap(lon_0 = 130,lat_0 = -60)
+
+#m = Basemap(llcrnrlon = -180, llcrnrlat = -90, urcrnrlon = 180, urcrnrlat = 90)
+m.drawcoastlines()
+m.drawcountries(color = "black")
 
 ds=xr.open_dataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/PhytoDOAS-PFT-v3.3_200301.nc')
 #ds=xr.open_dataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\PhytoDOAS-PFT-v3.3_200208.nc')
@@ -32,39 +37,21 @@ df.reset_index(inplace = True, drop = True)
 new_df = df.pivot(index='Lon', columns='Lat', values='CYA')
 
 
-lon = numpy.arange(-179.75, 180, 0.5)
-lat = numpy.arange(-89.75, 90, 0.5)
+lon = np.array(df.drop_duplicates(subset='Lon')['Lon'])
+lat = np.array(df.drop_duplicates(subset='Lat')['Lat'])
 data = new_df
+data=data.T
+
+
+# you have to write just like here to convert coordinates
+x,y = m(lon,lat)
 
 
 
+col = m.pcolormesh(x,y,data,cmap=plt.get_cmap('viridis'), latlon=True,vmin=0,vmax=0.2,linewidth=0,rasterized=True)
 
-
-# transform lon/lat to coordinate grid
-
-lon,lat = numpy.meshgrid(lon,lat, sparse=True)
-
-
-# Set up the map
-
-map=Basemap(projection='robin',lon_0=-130,lat_0=0)
-
-f=pyplot.figure()
-
-
-# plot the data
-
-col=map.pcolormesh(lon,lat,data, latlon=True,cmap=pyplot.get_cmap('viridis'),vmin=0,vmax=0.3,linewidth=0,rasterized=True)
-
-col.set_edgecolor('face')
-                                                                           
-
-# improve the map
-
-map.drawcoastlines(color='black')
-
-map.drawcountries(color='black')
-
+# hide land data points
+m.fillcontinents(color='white')
 
 # add a color bar
 
