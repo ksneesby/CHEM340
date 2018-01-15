@@ -7,11 +7,9 @@ Created on Tue Jan  9 14:15:45 2018
 """
 
 
-# =============================================================================
-# ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', concat_dim ='time')
-# ds.mean
-# =============================================================================
 
+
+import xarray as xr
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
@@ -25,22 +23,24 @@ m = Basemap(lon_0 = 130,lat_0 = -60)
 m.drawcoastlines()
 m.drawcountries(color = "black")
 
-ds=xr.open_dataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/PhytoDOAS-PFT-v3.3_200301.nc')
-#ds=xr.open_dataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\PhytoDOAS-PFT-v3.3_200208.nc')
 
+
+ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', concat_dim = 'time')
+#ds=xr.open_dataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\PhytoDOAS-PFT-v3.3_200208.nc')
 
 
 df=ds.to_dataframe()
 df.reset_index(inplace = True, drop = True)
 
 
-new_df = df.pivot(index='Lon', columns='Lat', values='CYA')
 
+
+mean_df = df['CYA'].groupby([df['Lat'], df['Lon']]).mean().unstack()
 
 lon = np.array(df.drop_duplicates(subset='Lon')['Lon'])
 lat = np.array(df.drop_duplicates(subset='Lat')['Lat'])
-data = new_df
-data=data.T
+data = mean_df
+
 
 
 # you have to write just like here to convert coordinates
