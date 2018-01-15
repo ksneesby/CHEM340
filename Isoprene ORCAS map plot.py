@@ -16,10 +16,21 @@ import numpy
 df = pd.read_csv('/home/kate/Downloads/ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
 #df = pd.read_csv('C:\Users\Kate\Documents\CHEM340repository\CHEM340\ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
 
-alt = df["ALTG_SRTM"].values
-lon = df["LONC"].values
-lat = df["LATC"].values
-data = df["Isoprene_TOGA"].values
+#sort data file according to altitude
+df.sort_values(['ALTG_SRTM'], ascending=True, inplace=True)
+df.reset_index(inplace = True)
+
+#find row in which altitude is above 2000
+counter = 0
+
+for i in range (len(df["ALTG_SRTM"])):
+    if df["ALTG_SRTM"][i] <= 2000:
+        counter = counter + 1
+
+alt = df["ALTG_SRTM"][:counter].values
+lon = df["LONC"][:counter].values
+lat = df["LATC"][:counter].values
+data = df["Isoprene_TOGA"][:counter].values
 
 # 1. Draw the map background
 fig = pyplot.figure(figsize=(8, 8))
