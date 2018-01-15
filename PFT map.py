@@ -17,9 +17,10 @@ from pandas import DataFrame
 
 plt.figure(figsize=(8, 8))
 
-m = Basemap(lon_0 = 130,lat_0 = -60)
 
-#m = Basemap(llcrnrlon = -180, llcrnrlat = -90, urcrnrlon = 180, urcrnrlat = 90)
+
+
+m = Basemap(llcrnrlon = -280, llcrnrlat = -90, urcrnrlon = 0, urcrnrlat = 90)
 m.drawcoastlines()
 m.drawcountries(color = "black")
 
@@ -55,7 +56,7 @@ m.fillcontinents(color='white')
 
 # add a color bar
 
-cb = map.colorbar(col, "bottom")
+cb = m.colorbar(col, "bottom")
 
 
 
