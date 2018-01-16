@@ -53,4 +53,9 @@ lon = df["LONC"][:counter].values
 lat = df["LATC"][:counter].values
 data = df["Isoprene_TOGA"][:counter].values
 
-condensed_df = 
+condensed_df = DataFrame(data=[df["LONC"][:counter],df["LATC"][:counter],df["Isoprene_TOGA"][:counter],df["MVK_TOGA"][:counter],df["MACR_TOGA"][:counter]])
+condensed_df = condensed_df.T
+
+condensed_df.dropna(thresh=3, inplace=True)
+
+condensed_df['DIA'],condensed_df['COC'],condensed_df['CYA']=np.NaN,np.NaN,np.NaN
