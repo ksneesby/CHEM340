@@ -25,11 +25,13 @@ df=ds.to_dataframe()
 df.reset_index(inplace = True, drop = True)
 
 
-mean_df = df['CYA'].groupby([df['Lat'], df['Lon']]).mean().unstack()
+meanCYA_df = df['CYA'].groupby([df['Lat'], df['Lon']]).mean().unstack()
+meanCOC_df = df['COC'].groupby([df['Lat'], df['Lon']]).mean().unstack()
+meanDIA_df = df['DIA'].groupby([df['Lat'], df['Lon']]).mean().unstack()
 
 lon = np.array(df.drop_duplicates(subset='Lon')['Lon'])
 lat = np.array(df.drop_duplicates(subset='Lat')['Lat'])
-data = mean_df
+data = meanCYA_df
 
 
 
@@ -57,5 +59,45 @@ condensed_df = DataFrame(data=[df["LONC"][:counter],df["LATC"][:counter],df["Iso
 condensed_df = condensed_df.T
 
 condensed_df.dropna(thresh=3, inplace=True)
+condensed_df.reset_index(inplace = True, drop=True)
 
 condensed_df['DIA'],condensed_df['COC'],condensed_df['CYA']=np.NaN,np.NaN,np.NaN
+
+row=0
+
+for i in range(len(condensed_df)):
+    lon_value = condensed_df.iloc[i,0]
+    lat_value = condensed_df.iloc[i,1]
+    
+    lon=list(meanCYA_df.columns.values)
+    lat= list(meanCYA_df.index.values)
+    
+    counter=0
+    loncount=[]
+    latcount=[]
+    while counter<len(lon):
+        if (lon[counter]-lon_value)>-0.25 and (lon[counter]-lon_value)<0.25:
+            loncount=counter
+        counter+=1
+        
+    counter=0
+    while counter<len(lat):
+        if (lat[counter]-lat_value)>-0.25 and (lat[counter]-lat_value)<0.25:
+            latcount=counter
+        counter+=1
+    
+    condensed_df.loc[row,'DIA'] = meanDIA_df.iloc[loncount,latcount]
+    condensed_df.loc[row,'COC'] = meanCOC_df.iloc[loncount,latcount]
+    condensed_df.loc[row,'CYA'] = meanCYA_df.iloc[loncount,latcount]
+    row +=1
+    
+mean_condensed_df = condensed_df.groupby('CYA', as_index=False).mean()
+
+# =============================================================================
+# plt.figure(1)
+# plt.plot(mean_condensed_df["MACR_TOGA"],mean_condensed_df["CYA"],"o",ms=2, color="blue")
+# plt.xlabel ("MACR")
+# plt.ylabel ("CYA")
+# plt.xlim(0,4)
+# plt.ylim(0,0.1)
+# =============================================================================
