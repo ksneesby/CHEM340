@@ -21,6 +21,7 @@ ds=xr.open_mfdataset('/home/kate/Documents/CHEM340/PhytoDOAS-PFT-v3.3/*01.nc', c
 #ds=xr.open_dataset('C:\Users\Kate\Documents\CHEM340repository\CHEM340\PhytoDOAS-PFT-v3.3\PhytoDOAS-PFT-v3.3_200208.nc')
 
 
+
 df=ds.to_dataframe()
 df.reset_index(inplace = True, drop = True)
 
@@ -93,11 +94,99 @@ for i in range(len(condensed_df)):
     
 mean_condensed_df = condensed_df.groupby('CYA', as_index=False).mean()
 
-# =============================================================================
-# plt.figure(1)
-# plt.plot(mean_condensed_df["MACR_TOGA"],mean_condensed_df["CYA"],"o",ms=2, color="blue")
-# plt.xlabel ("MACR")
-# plt.ylabel ("CYA")
-# plt.xlim(0,4)
-# plt.ylim(0,0.1)
-# =============================================================================
+
+
+
+plt.figure(1)
+plt.plot(mean_condensed_df["DIA"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="blue")
+plt.xlabel ("Diatoms (mgCHLa/m3)")
+plt.ylabel ("Isoprene")
+
+
+plt.figure(2)
+plt.plot(mean_condensed_df["COC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="red")
+plt.xlabel ("Coccolithophores (mgCHLa/m3)")
+plt.ylabel ("Isoprene")
+
+
+plt.figure(3)
+plt.plot(mean_condensed_df["CYA"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="green")
+plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
+plt.ylabel ("Isoprene")
+
+
+plt.figure(4)
+plt.plot(mean_condensed_df["LATC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="orange")
+plt.xlabel ("Latitude")
+plt.ylabel ("Isoprene")
+
+
+plt.figure(5)
+plt.plot(mean_condensed_df["LONC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="purple")
+plt.xlabel ("Longitude")
+plt.ylabel ("Isoprene")
+
+
+plt.figure(6)
+plt.plot(mean_condensed_df["DIA"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="blue")
+plt.xlabel ("Diatoms (mgCHLa/m3)")
+plt.ylabel ("MVK")
+
+
+plt.figure(7)
+plt.plot(mean_condensed_df["COC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="red")
+plt.xlabel ("Coccolithophores (mgCHLa/m3)")
+plt.ylabel ("MVK")
+
+
+plt.figure(8)
+plt.plot(mean_condensed_df["CYA"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="green")
+plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
+plt.ylabel ("MVK")
+
+
+plt.figure(9)
+plt.plot(mean_condensed_df["LATC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="orange")
+plt.xlabel ("Latitude")
+plt.ylabel ("MVK")
+
+
+plt.figure(10)
+plt.plot(mean_condensed_df["LONC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="purple")
+plt.xlabel ("Longitude")
+plt.ylabel ("MVK")
+
+
+plt.figure(11)
+plt.plot(mean_condensed_df["DIA"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="blue")
+plt.xlabel ("Diatoms (mgCHLa/m3)")
+plt.ylabel ("MACR")
+
+
+plt.figure(12)
+plt.plot(mean_condensed_df["COC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="red")
+plt.xlabel ("Coccolithophores (mgCHLa/m3)")
+plt.ylabel ("MACR")
+
+
+plt.figure(13)
+plt.plot(mean_condensed_df["CYA"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="green")
+plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
+plt.ylabel ("MACR")
+
+
+plt.figure(14)
+plt.plot(mean_condensed_df["LATC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="orange")
+plt.xlabel ("Latitude")
+plt.ylabel ("MACR")
+
+
+plt.figure(15)
+plt.plot(mean_condensed_df["LONC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="purple")
+plt.xlabel ("Longitude")
+plt.ylabel ("MACR")
+
+
+
+ 
+
