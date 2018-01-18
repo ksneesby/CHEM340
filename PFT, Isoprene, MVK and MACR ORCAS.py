@@ -12,7 +12,7 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 from pandas import DataFrame
 import pandas as pd
-
+from scipy import stats
 
 
 
@@ -94,98 +94,305 @@ for i in range(len(condensed_df)):
     
 mean_condensed_df = condensed_df.groupby('CYA', as_index=False).mean()
 
+###################Set x and y#########################
+x = mean_condensed_df["DIA"]
+y = mean_condensed_df["Isoprene_TOGA"]
+xlabel = "Diatoms (mgCHLa/m3)"
+ylabel = "Isoprene"
 
 
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(1)
-plt.plot(mean_condensed_df["DIA"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="blue")
-plt.xlabel ("Diatoms (mgCHLa/m3)")
-plt.ylabel ("Isoprene")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.text(0.22,25,'r-squared = ' +str(r_value**2))
+plt.ylim(0,30)
 
+###################Set x and y#########################
+x = mean_condensed_df["COC"]
+y = mean_condensed_df["Isoprene_TOGA"]
+xlabel = "Coccolithophores (mgCHLa/m3)"
+ylabel = "Isoprene"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(2)
-plt.plot(mean_condensed_df["COC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="red")
-plt.xlabel ("Coccolithophores (mgCHLa/m3)")
-plt.ylabel ("Isoprene")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.text(0,25,'r-squared = ' +str(r_value**2))
+plt.ylim(0,30)
 
+###################Set x and y#########################
+x = mean_condensed_df["CYA"]
+y = mean_condensed_df["Isoprene_TOGA"]
+xlabel = "Cyanobacteria (mgCHLa/m3)"
+ylabel = "Isoprene"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(3)
-plt.plot(mean_condensed_df["CYA"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="green")
-plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
-plt.ylabel ("Isoprene")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,30)
+plt.text(0.3,25,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LATC"]
+y = mean_condensed_df["Isoprene_TOGA"]
+xlabel = "Latitude"
+ylabel = "Isoprene"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(4)
-plt.plot(mean_condensed_df["LATC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="orange")
-plt.xlabel ("Latitude")
-plt.ylabel ("Isoprene")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,30)
+plt.text(-53,25,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LONC"]
+y = mean_condensed_df["Isoprene_TOGA"]
+xlabel = "Longitude"
+ylabel = "Isoprene"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(5)
-plt.plot(mean_condensed_df["LONC"],mean_condensed_df["Isoprene_TOGA"],"o",ms=2, color="purple")
-plt.xlabel ("Longitude")
-plt.ylabel ("Isoprene")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,30)
+plt.text(-90,25,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["DIA"]
+y = mean_condensed_df["MVK_TOGA"]
+xlabel = "Diatoms (mgCHLa/m3)"
+ylabel = "MVK"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(6)
-plt.plot(mean_condensed_df["DIA"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="blue")
-plt.xlabel ("Diatoms (mgCHLa/m3)")
-plt.ylabel ("MVK")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,25)
+plt.text(0.2,20,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["COC"]
+y = mean_condensed_df["MVK_TOGA"]
+xlabel = "Coccolithophores (mgCHLa/m3)"
+ylabel = "MVK"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(7)
-plt.plot(mean_condensed_df["COC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="red")
-plt.xlabel ("Coccolithophores (mgCHLa/m3)")
-plt.ylabel ("MVK")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,25)
+plt.text(0,20,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["CYA"]
+y = mean_condensed_df["MVK_TOGA"]
+xlabel = "Cyanobacteria (mgCHLa/m3)"
+ylabel = "MVK"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(8)
-plt.plot(mean_condensed_df["CYA"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="green")
-plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
-plt.ylabel ("MVK")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,25)
+plt.text(0.3,20,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LATC"]
+y = mean_condensed_df["MVK_TOGA"]
+xlabel = "Latitude"
+ylabel = "MVK"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(9)
-plt.plot(mean_condensed_df["LATC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="orange")
-plt.xlabel ("Latitude")
-plt.ylabel ("MVK")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,25)
+plt.text(-50,20,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LONC"]
+y = mean_condensed_df["MVK_TOGA"]
+xlabel = "Longitude"
+ylabel = "MVK"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(10)
-plt.plot(mean_condensed_df["LONC"],mean_condensed_df["MVK_TOGA"],"o",ms=2, color="purple")
-plt.xlabel ("Longitude")
-plt.ylabel ("MVK")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,25)
+plt.text(-90,20,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["DIA"]
+y = mean_condensed_df["MACR_TOGA"]
+xlabel = "Diatoms (mgCHLa/m3)"
+ylabel = "MACR"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(11)
-plt.plot(mean_condensed_df["DIA"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="blue")
-plt.xlabel ("Diatoms (mgCHLa/m3)")
-plt.ylabel ("MACR")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,15)
+plt.text(0.2,12,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["COC"]
+y = mean_condensed_df["MACR_TOGA"]
+xlabel = "Coccolithophores (mgCHLa/m3)"
+ylabel = "MACR"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(12)
-plt.plot(mean_condensed_df["COC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="red")
-plt.xlabel ("Coccolithophores (mgCHLa/m3)")
-plt.ylabel ("MACR")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,15)
+plt.text(0,12,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["CYA"]
+y = mean_condensed_df["MACR_TOGA"]
+xlabel = "Cyanobacteria (mgCHLa/m3)"
+ylabel = "MACR"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(13)
-plt.plot(mean_condensed_df["CYA"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="green")
-plt.xlabel ("Cyanobacteria (mgCHLa/m3)")
-plt.ylabel ("MACR")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,15)
+plt.text(0.3,12,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LATC"]
+y = mean_condensed_df["MACR_TOGA"]
+xlabel = "Latitude"
+ylabel = "MACR"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(14)
-plt.plot(mean_condensed_df["LATC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="orange")
-plt.xlabel ("Latitude")
-plt.ylabel ("MACR")
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,15)
+plt.text(-50,12,'r-squared = ' +str(r_value**2))
 
+###################Set x and y#########################
+x = mean_condensed_df["LONC"]
+y = mean_condensed_df["MACR_TOGA"]
+xlabel = "Longitude"
+ylabel = "MACR"
+
+
+# Generated linear fit
+mask = ~np.isnan(x) & ~np.isnan(y)
+slope, intercept, r_value, p_value, std_err = stats.linregress(x[mask],y[mask])
+line = slope*x+intercept
 
 plt.figure(15)
-plt.plot(mean_condensed_df["LONC"],mean_condensed_df["MACR_TOGA"],"o",ms=2, color="purple")
-plt.xlabel ("Longitude")
-plt.ylabel ("MACR")
-
+plt.plot(x,y,"o", ms=2, color="blue")
+plt.plot(x, intercept + slope*x, 'r')
+plt.xlabel (xlabel)
+plt.ylabel (ylabel)
+plt.ylim(0,15)
+plt.text(-90,12,'r-squared = ' +str(r_value**2))
 
 
  
