@@ -63,6 +63,22 @@ condensed_df.reset_index(inplace = True, drop=True)
 
 condensed_df['DIA'],condensed_df['COC'],condensed_df['CYA']=np.NaN,np.NaN,np.NaN
 
+
+# Remove outliers that are more than 3 standard deviations away from the mean
+
+isoprene_mean = np.mean(condensed_df['Isoprene_TOGA'])
+MVK_mean = np.mean(condensed_df['MVK_TOGA'])
+MACR_mean = np.mean(condensed_df['MACR_TOGA'])
+
+isoprene_std = np.std(condensed_df['Isoprene_TOGA'])
+MVK_std = np.std(condensed_df['MVK_TOGA'])
+MACR_std = np.std(condensed_df['MACR_TOGA'])
+
+
+
+
+# Correlate Isoprene, MVK and MACR data with PFT values from closest lat/lon node
+
 row=0
 
 for i in range(len(condensed_df)):
@@ -92,6 +108,9 @@ for i in range(len(condensed_df)):
     row +=1
     
 mean_condensed_df = condensed_df.groupby('CYA', as_index=False).mean()
+
+
+#Plot linear regression plots for combinations of each variable.
 
 ###################Set x and y#########################
 x = mean_condensed_df["DIA"]
