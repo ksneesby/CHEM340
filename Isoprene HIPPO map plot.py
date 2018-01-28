@@ -11,7 +11,9 @@ import numpy
 
 
 # read in data file
-df = pd.read_csv('/home/kate/Documents/CHEM340/HIPPO/HIPPO_discrete_continuous_merge_20121129.tbl', sep=' ') 
+#df = pd.read_csv('/home/kate/Documents/CHEM340/HIPPO/HIPPO_discrete_continuous_merge_20121129.tbl', sep=' ') 
+df=pd.read_csv('C:\Users\Kate\Documents\CHEM340repository\CHEM340\HIPPO\HIPPO_discrete_continuous_merge_20121129.tbl', sep=' ')
+
 
 #sort data file according to altitude
 df.sort_values(['GGALT'], ascending=True, inplace=True)

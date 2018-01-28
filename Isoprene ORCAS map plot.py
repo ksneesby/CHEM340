@@ -13,8 +13,8 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as pyplot
 import numpy
 
-df = pd.read_csv('/home/kate/Downloads/ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
-#df = pd.read_csv('C:\Users\Kate\Documents\CHEM340repository\CHEM340\ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
+#df = pd.read_csv('/home/kate/Downloads/ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
+df = pd.read_csv('C:\Users\Kate\Documents\CHEM340repository\CHEM340\ORCASall.mergeTOGA.tbl', sep=' ', na_values = "-888") #Setting values outside detection limit as NA values
 
 #sort data file according to altitude
 df.sort_values(['ALTG_SRTM'], ascending=True, inplace=True)
@@ -36,7 +36,7 @@ data = df["Isoprene_TOGA"][:counter].values
 fig = pyplot.figure(figsize=(8, 8))
 #m = Basemap(projection='robin',lon_0=-70,lat_0=0)
 
-m = Basemap(projection='aeqd',lon_0 = -70,lat_0 = -60,width = 10000000,height = 10000000)
+m = Basemap(projection='aeqd',lon_0 = -70,lat_0 = -70,width = 10000000,height = 10000000)
 
 m.drawcoastlines(color='black')
 m.drawcountries(color='black')
